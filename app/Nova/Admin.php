@@ -43,7 +43,7 @@ class Admin extends Resource
                 ->filterable()
                 ->default('UTC'),
 
-            ...$this->getTimestampsFields(),
+            ...$this->getTimestampsFields($request),
         ];
     }
 }

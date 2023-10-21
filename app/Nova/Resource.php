@@ -56,18 +56,28 @@ abstract class Resource extends NovaResource
         return parent::relatableQuery($request, $query);
     }
 
-    protected function getTimestampsFields(): array
+    protected function getTimestampsFields($request = null): array
     {
         return [
             Fields\DateTime::make(__('Create date'), 'created_at')
                 ->exceptOnForms()
                 ->sortable()
-                ->filterable(),
+                ->filterable()
+                ->displayUsing(function ($date) use ($request) {
+                    $timezone = $request?->user()?->timezone ?? 'UTC';
+
+                    return $date->setTimezone($timezone)->format('d.m.Y H:i:sP');
+                }),
 
             Fields\DateTime::make(__('Update date'), 'updated_at')
                 ->exceptOnForms()
                 ->sortable()
-                ->filterable(),
+                ->filterable()
+                ->displayUsing(function ($date) use ($request) {
+                    $timezone = $request?->user()?->timezone ?? 'UTC';
+
+                    return $date->setTimezone($timezone)->format('d.m.Y H:i:sP');
+                }),
         ];
     }
 }
