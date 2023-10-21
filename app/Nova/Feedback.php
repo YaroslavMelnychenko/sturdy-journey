@@ -33,7 +33,7 @@ class Feedback extends Resource
                 ->sortable(),
 
             Fields\Textarea::make(__('Short description'), 'short_description')
-                ->rules('required', 'string', 'max:10000'),
+                ->rules('required', 'string', 'max:5000'),
 
             ...$this->getTimestampsFields($request),
         ];

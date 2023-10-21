@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Storage;
 
 class Item extends Model
 {
@@ -26,6 +27,52 @@ class Item extends Model
         'description' => 'array',
         'features' => 'array',
     ];
+
+    public function parsedDescription(): array
+    {
+        $description = [];
+
+        foreach ($this->description as $key => $value) {
+            $description[] = [
+                'heading' => $key,
+                'paragraph' => $value,
+            ];
+        }
+
+        return $description;
+    }
+
+    public function parsedFeatures(): array
+    {
+        $description = [];
+
+        foreach ($this->features as $key => $value) {
+            $description[] = [
+                'heading' => $key,
+                'text' => $value,
+            ];
+        }
+
+        return $description;
+    }
+
+    public function fullIconUrl(): ?string
+    {
+        if ($this->icon === null) {
+            return null;
+        }
+
+        return Storage::url($this->icon);
+    }
+
+    public function fullImageUrl(): ?string
+    {
+        if ($this->image === null) {
+            return null;
+        }
+
+        return Storage::url($this->image);
+    }
 
     public function category()
     {
