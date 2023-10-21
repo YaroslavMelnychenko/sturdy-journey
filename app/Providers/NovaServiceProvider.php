@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Nova\Dashboards;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Outl1ne\NovaSettings\NovaSettings;
 use View;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -28,6 +31,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         Nova::footer(function ($request) {
             return View::make('vendor.nova.partials.footer')->render();
         });
+
+        NovaSettings::addSettingsFields([
+            Fields\Email::make(__('Feedback email'), 'feedback_email'),
+        ]);
     }
 
     /**
@@ -65,7 +72,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards()
     {
         return [
-            new \App\Nova\Dashboards\Main,
+            new Dashboards\Main,
         ];
     }
 
@@ -76,7 +83,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            new NovaSettings,
+        ];
     }
 
     /**

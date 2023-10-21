@@ -9,10 +9,11 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/horizon": "^5.21",
+        "laravel/nova": "*",
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.8",
-        "laravel/nova": "*"
+        "outl1ne/nova-settings": "^5.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
