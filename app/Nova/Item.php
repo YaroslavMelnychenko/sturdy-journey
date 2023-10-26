@@ -43,11 +43,22 @@ class Item extends Resource
                 ->sortable()
                 ->filterable(),
 
+            Fields\URL::make(__('Rating url'), 'rating_url')
+                ->rules('required', 'url', 'max:255')
+                ->displayUsing(function () {
+                    return $this->rating_url;
+                })
+                ->hideFromIndex(),
+
             Fields\Textarea::make(__('Short description'), 'short_description')
                 ->rules('required', 'string', 'max:5000'),
 
             Fields\URL::make(__('Link'), 'link')
-                ->rules('required', 'url', 'max:255'),
+                ->rules('required', 'url', 'max:255')
+                ->displayUsing(function () {
+                    return $this->link;
+                })
+                ->hideFromIndex(),
 
             Fields\KeyValue::make(__('Description'), 'description')
                 ->rules('required', 'json')
@@ -62,15 +73,21 @@ class Item extends Resource
                 ->actionText(__('Add feature')),
 
             Fields\Image::make(__('Icon'), 'icon')
-                ->rules('required', 'image', 'max:'. 10 * 1024)
+                ->rules('image', 'max:'. 10 * 1024)
+                ->creationRules('required')
+                ->updateRules('nullable')
                 ->store(Storage\BaseStorage::folder('items/icons'))
                 ->indexWidth(50)
-                ->detailWidth(50),
+                ->detailWidth(50)
+                ->deletable(false),
 
             Fields\Image::make(__('Image'), 'image')
-                ->rules('required', 'image', 'max:'. 10 * 1024)
+                ->rules('image', 'max:'. 10 * 1024)
+                ->creationRules('required')
+                ->updateRules('nullable')
                 ->store(Storage\BaseStorage::folder('items/images'))
-                ->hideFromIndex(),
+                ->hideFromIndex()
+                ->deletable(false),
 
             ...$this->getTimestampsFields($request),
         ];

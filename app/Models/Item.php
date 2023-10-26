@@ -15,6 +15,7 @@ class Item extends Model
         'name',
         'place',
         'rating',
+        'rating_url',
         'short_description',
         'link',
         'description',

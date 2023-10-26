@@ -11,7 +11,7 @@ class DetailedResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            ...$this->only('id', 'name', 'place', 'rating', 'short_description', 'link'),
+            ...$this->only('id', 'name', 'place', 'rating', 'rating_url', 'short_description', 'link'),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'description' => $this->parsedDescription(),
             'features' => $this->parsedFeatures(),
