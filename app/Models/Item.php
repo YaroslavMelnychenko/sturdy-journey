@@ -20,6 +20,7 @@ class Item extends Model
         'link',
         'description',
         'features',
+        'seo',
         'icon',
         'image',
     ];
@@ -27,6 +28,7 @@ class Item extends Model
     protected $casts = [
         'description' => 'array',
         'features' => 'array',
+        'seo' => 'array',
     ];
 
     public function parsedDescription(): array
@@ -55,6 +57,24 @@ class Item extends Model
         }
 
         return $description;
+    }
+
+    public function parsedSeo(): array
+    {
+        $seo = [];
+
+        if ($this->seo === null) {
+            return $seo;
+        }
+
+        foreach ($this->seo as $key => $value) {
+            $seo[] = [
+                'heading' => $key,
+                'text' => $value,
+            ];
+        }
+
+        return $seo;
     }
 
     public function fullIconUrl(): ?string

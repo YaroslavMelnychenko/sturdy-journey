@@ -72,6 +72,12 @@ class Item extends Resource
                 ->valueLabel(__('Text'))
                 ->actionText(__('Add feature')),
 
+            Fields\KeyValue::make(__('SEO'), 'seo')
+                ->rules('required', 'json')
+                ->keyLabel(__('Heading'))
+                ->valueLabel(__('Text'))
+                ->actionText(__('Add record')),
+
             Fields\Image::make(__('Icon'), 'icon')
                 ->rules('image', 'max:'. 10 * 1024)
                 ->creationRules('required')

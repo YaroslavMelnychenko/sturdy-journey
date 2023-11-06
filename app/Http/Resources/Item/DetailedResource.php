@@ -15,6 +15,7 @@ class DetailedResource extends JsonResource
             'category' => new CategoryResource($this->whenLoaded('category')),
             'description' => $this->parsedDescription(),
             'features' => $this->parsedFeatures(),
+            'seo' => $this->parsedSeo(),
             'icon_url' => $this->fullIconUrl(),
             'image_url' => $this->fullImageUrl(),
         ];

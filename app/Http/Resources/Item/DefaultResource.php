@@ -11,6 +11,7 @@ class DefaultResource extends JsonResource
     {
         return [
             ...$this->only('id', 'name', 'place', 'rating', 'rating_url', 'short_description', 'link'),
+            'seo' => $this->parsedSeo(),
             'icon_url' => $this->fullIconUrl(),
         ];
     }
