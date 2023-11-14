@@ -35,10 +35,10 @@ class Item extends Model
     {
         $description = [];
 
-        foreach ($this->description as $key => $value) {
+        foreach ($this->description as $item) {
             $description[] = [
-                'heading' => $key,
-                'paragraph' => $value,
+                'heading' => $item['fields']['heading'],
+                'paragraph' => $item['fields']['text'],
             ];
         }
 
@@ -49,10 +49,10 @@ class Item extends Model
     {
         $description = [];
 
-        foreach ($this->features as $key => $value) {
+        foreach ($this->features as $item) {
             $description[] = [
-                'heading' => $key,
-                'text' => $value,
+                'heading' => $item['fields']['heading'],
+                'text' => $item['fields']['text'],
             ];
         }
 
@@ -67,10 +67,10 @@ class Item extends Model
             return $seo;
         }
 
-        foreach ($this->seo as $key => $value) {
+        foreach ($this->seo as $item) {
             $seo[] = [
-                'heading' => $key,
-                'text' => $value,
+                'heading' => $item['fields']['heading'],
+                'text' => $item['fields']['text'],
             ];
         }
 
