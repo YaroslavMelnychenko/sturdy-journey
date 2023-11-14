@@ -60,23 +60,65 @@ class Item extends Resource
                 })
                 ->hideFromIndex(),
 
-            Fields\KeyValue::make(__('Description'), 'description')
-                ->rules('required', 'json')
-                ->keyLabel(__('Heading'))
-                ->valueLabel(__('Text'))
-                ->actionText(__('Add paragraph')),
+            Fields\Repeater::make(__('Description'), 'description')
+                ->repeatables([
+                    Repeater\KeyValue::make(),
+                ])
+                ->asJson()
+                ->rules('required'),
 
-            Fields\KeyValue::make(__('Features'), 'features')
-                ->rules('required', 'json')
-                ->keyLabel(__('Heading'))
-                ->valueLabel(__('Text'))
-                ->actionText(__('Add feature')),
+            Fields\Text::make(__('Description'), function () {
+                $text = '';
 
-            Fields\KeyValue::make(__('SEO'), 'seo')
-                ->rules('required', 'json')
-                ->keyLabel(__('Heading'))
-                ->valueLabel(__('Text'))
-                ->actionText(__('Add record')),
+                foreach ($this->description as $item) {
+                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
+                }
+
+                return $text;
+            })
+                ->asHtml()
+                ->exceptOnForms()
+                ->hideFromIndex(),
+
+            Fields\Repeater::make(__('Features'), 'features')
+                ->repeatables([
+                    Repeater\KeyValue::make(),
+                ])
+                ->asJson()
+                ->rules('required'),
+
+            Fields\Text::make(__('Features'), function () {
+                $text = '';
+
+                foreach ($this->features as $item) {
+                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
+                }
+
+                return $text;
+            })
+                ->asHtml()
+                ->exceptOnForms()
+                ->hideFromIndex(),
+
+            Fields\Repeater::make(__('SEO'), 'seo')
+                ->repeatables([
+                    Repeater\KeyValue::make(),
+                ])
+                ->asJson()
+                ->rules('required'),
+
+            Fields\Text::make(__('SEO'), function () {
+                $text = '';
+
+                foreach ($this->features as $item) {
+                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
+                }
+
+                return $text;
+            })
+                ->asHtml()
+                ->exceptOnForms()
+                ->hideFromIndex(),
 
             Fields\Image::make(__('Icon'), 'icon')
                 ->rules('image', 'max:'. 10 * 1024)
