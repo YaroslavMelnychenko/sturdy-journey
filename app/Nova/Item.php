@@ -110,7 +110,7 @@ class Item extends Resource
             Fields\Text::make(__('SEO'), function () {
                 $text = '';
 
-                foreach ($this->features as $item) {
+                foreach ($this->seo as $item) {
                     $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
                 }
 
