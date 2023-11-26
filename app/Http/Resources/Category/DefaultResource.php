@@ -9,6 +9,9 @@ class DefaultResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        return $this->only('id', 'name');
+        return [
+            ...$this->only('id'),
+            'name' => $this->__('name'),
+        ];
     }
 }

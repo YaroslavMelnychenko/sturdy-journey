@@ -25,6 +25,14 @@ class Category extends Resource
                 ->rules('required', 'string', 'max:255')
                 ->sortable(),
 
+            Fields\Text::make(__('Name ru'), 'name_ru')
+                ->rules('nullable', 'string', 'max:255')
+                ->sortable(),
+
+            Fields\Text::make(__('Name uk'), 'name_uk')
+                ->rules('nullable', 'string', 'max:255')
+                ->sortable(),
+
             ...$this->getTimestampsFields($request),
 
             Fields\HasMany::make(__('Items'), 'items', Item::class),
