@@ -132,8 +132,7 @@ class Item extends Resource
 
             Fields\Text::make($field_key, function () use ($field) {
                 $text = '';
-
-                dump($this->{$field});
+                
                 foreach ($this->{$field} ?? [] as $item) {
                     $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
                 }
