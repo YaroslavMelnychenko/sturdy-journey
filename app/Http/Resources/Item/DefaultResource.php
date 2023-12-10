@@ -10,7 +10,9 @@ class DefaultResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            ...$this->only('id', 'name', 'place', 'rating', 'rating_url', 'short_description', 'link'),
+            ...$this->only('id', 'name', 'rating', 'rating_url', 'link'),
+            'short_description' => $this->__('short_description'),
+            'place' => $this->__('place'),
             'seo' => $this->parsedSeo(),
             'icon_url' => $this->fullIconUrl(),
         ];

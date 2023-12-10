@@ -8,34 +8,51 @@ use Storage;
 
 class Item extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        Traits\HasLocales;
 
     protected $fillable = [
         'category_id',
         'name',
         'place',
+        'place_ru',
+        'place_uk',
         'rating',
         'rating_url',
         'short_description',
+        'short_description_ru',
+        'short_description_uk',
         'link',
         'description',
+        'description_ru',
+        'description_uk',
         'features',
+        'features_ru',
+        'features_uk',
         'seo',
+        'seo_ru',
+        'seo_uk',
         'icon',
         'image',
     ];
 
     protected $casts = [
         'description' => 'array',
+        'description_ru' => 'array',
+        'description_uk' => 'array',
         'features' => 'array',
+        'features_ru' => 'array',
+        'features_uk' => 'array',
         'seo' => 'array',
+        'seo_ru' => 'array',
+        'seo_uk' => 'array',
     ];
 
     public function parsedDescription(): array
     {
         $description = [];
 
-        foreach ($this->description as $item) {
+        foreach ($this->__('description') as $item) {
             $description[] = [
                 'heading' => $item['fields']['heading'],
                 'paragraph' => $item['fields']['text'],
@@ -49,7 +66,7 @@ class Item extends Model
     {
         $description = [];
 
-        foreach ($this->features as $item) {
+        foreach ($this->__('features') as $item) {
             $description[] = [
                 'heading' => $item['fields']['heading'],
                 'text' => $item['fields']['text'],
@@ -63,11 +80,11 @@ class Item extends Model
     {
         $seo = [];
 
-        if ($this->seo === null) {
+        if ($this->__('seo') === null) {
             return $seo;
         }
 
-        foreach ($this->seo as $item) {
+        foreach ($this->__('seo') as $item) {
             $seo[] = [
                 'heading' => $item['fields']['heading'],
                 'text' => $item['fields']['text'],

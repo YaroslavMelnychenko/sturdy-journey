@@ -24,7 +24,13 @@ class ItemFactory extends Factory
             $heading = $this->faker->sentence(rand(2, 8));
             $text = $this->faker->paragraph(rand(2, 6));
 
-            $description[$heading] = $text;
+            $description[] = [
+                'type' => 'key-value',
+                'fields' => [
+                    'heading' => $heading,
+                    'text' => $text,
+                ],
+            ];
         }
 
         $features = [];
@@ -35,7 +41,13 @@ class ItemFactory extends Factory
             $heading = $this->faker->sentence(rand(1, 3));
             $text = $this->faker->sentence(rand(2, 8));
 
-            $features[$heading] = $text;
+            $features[] = [
+                'type' => 'key-value',
+                'fields' => [
+                    'heading' => $heading,
+                    'text' => $text,
+                ],
+            ];
         }
 
         return [

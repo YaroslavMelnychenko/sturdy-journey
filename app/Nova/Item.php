@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models;
 use Laravel\Nova\Fields;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class Item extends Resource
 {
@@ -31,9 +32,19 @@ class Item extends Resource
                 ->rules('required', 'string', 'max:255')
                 ->sortable(),
 
-            Fields\Text::make(__('Place'), 'place')
-                ->rules('required', 'string', 'max:255')
-                ->sortable(),
+            new Panel(__('Place'), [
+                Fields\Text::make(__('Place'), 'place')
+                    ->rules('required', 'string', 'max:255')
+                    ->sortable(),
+
+                Fields\Text::make(__('Place ru'), 'place_ru')
+                    ->rules('required', 'string', 'max:255')
+                    ->hideFromIndex(),
+
+                Fields\Text::make(__('Place uk'), 'place_uk')
+                    ->rules('required', 'string', 'max:255')
+                    ->hideFromIndex(),
+            ]),
 
             Fields\Number::make(__('Rating'), 'rating')
                 ->rules('required', 'min:0', 'max:5')
@@ -50,8 +61,18 @@ class Item extends Resource
                 })
                 ->hideFromIndex(),
 
-            Fields\Textarea::make(__('Short description'), 'short_description')
-                ->rules('required', 'string', 'max:5000'),
+            new Panel(__('Short description'), [
+                Fields\Textarea::make(__('Short description'), 'short_description')
+                    ->rules('required', 'string', 'max:5000'),
+
+                Fields\Textarea::make(__('Short description ru'), 'short_description_ru')
+                    ->rules('required', 'string', 'max:5000')
+                    ->hideFromIndex(),
+
+                Fields\Textarea::make(__('Short description uk'), 'short_description_uk')
+                    ->rules('required', 'string', 'max:5000')
+                    ->hideFromIndex(),
+            ]),
 
             Fields\URL::make(__('Link'), 'link')
                 ->rules('required', 'url', 'max:255')
@@ -60,65 +81,23 @@ class Item extends Resource
                 })
                 ->hideFromIndex(),
 
-            Fields\Repeater::make(__('Description'), 'description')
-                ->repeatables([
-                    Repeater\KeyValue::make(),
-                ])
-                ->asJson()
-                ->rules('required'),
+            new Panel(__('Description'), [
+                ...$this->makeRepeatableFields(__('Description'), 'description'),
+                ...$this->makeRepeatableFields(__('Description ru'), 'description_ru'),
+                ...$this->makeRepeatableFields(__('Description uk'), 'description_uk'),
+            ]),
 
-            Fields\Text::make(__('Description'), function () {
-                $text = '';
+            new Panel(__('Features'), [
+                ...$this->makeRepeatableFields(__('Features'), 'features'),
+                ...$this->makeRepeatableFields(__('Features ru'), 'features_ru'),
+                ...$this->makeRepeatableFields(__('Features uk'), 'features_uk'),
+            ]),
 
-                foreach ($this->description as $item) {
-                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
-                }
-
-                return $text;
-            })
-                ->asHtml()
-                ->exceptOnForms()
-                ->hideFromIndex(),
-
-            Fields\Repeater::make(__('Features'), 'features')
-                ->repeatables([
-                    Repeater\KeyValue::make(),
-                ])
-                ->asJson()
-                ->rules('required'),
-
-            Fields\Text::make(__('Features'), function () {
-                $text = '';
-
-                foreach ($this->features as $item) {
-                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
-                }
-
-                return $text;
-            })
-                ->asHtml()
-                ->exceptOnForms()
-                ->hideFromIndex(),
-
-            Fields\Repeater::make(__('SEO'), 'seo')
-                ->repeatables([
-                    Repeater\KeyValue::make(),
-                ])
-                ->asJson()
-                ->rules('required'),
-
-            Fields\Text::make(__('SEO'), function () {
-                $text = '';
-
-                foreach ($this->seo as $item) {
-                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
-                }
-
-                return $text;
-            })
-                ->asHtml()
-                ->exceptOnForms()
-                ->hideFromIndex(),
+            new Panel(__('SEO'), [
+                ...$this->makeRepeatableFields(__('SEO'), 'seo'),
+                ...$this->makeRepeatableFields(__('SEO ru'), 'seo_ru'),
+                ...$this->makeRepeatableFields(__('SEO uk'), 'seo_uk'),
+            ]),
 
             Fields\Image::make(__('Icon'), 'icon')
                 ->rules('image', 'max:'. 10 * 1024)
@@ -138,6 +117,32 @@ class Item extends Resource
                 ->deletable(false),
 
             ...$this->getTimestampsFields($request),
+        ];
+    }
+
+    public function makeRepeatableFields(string $field_key, string $field): array
+    {
+        return [
+            Fields\Repeater::make($field_key, $field)
+                ->repeatables([
+                    Repeater\KeyValue::make(),
+                ])
+                ->asJson()
+                ->rules('required'),
+
+            Fields\Text::make($field_key, function () use ($field) {
+                $text = '';
+
+                dump($this->{$field});
+                foreach ($this->{$field} ?? [] as $item) {
+                    $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
+                }
+
+                return $text;
+            })
+                ->asHtml()
+                ->exceptOnForms()
+                ->hideFromIndex(),
         ];
     }
 }
