@@ -32,6 +32,13 @@ class Item extends Resource
                 ->rules('required', 'string', 'max:255')
                 ->sortable(),
 
+            Fields\Slug::make(__('Slug'), 'slug')
+                ->from('name')
+                ->rules('required', 'string', 'max:255', 'alpha_dash')
+                ->creationRules('unique:items,slug')
+                ->updateRules('unique:items,slug,{{resourceId}}')
+                ->sortable(),
+
             new Panel(__('Place'), [
                 Fields\Text::make(__('Place'), 'place')
                     ->rules('required', 'string', 'max:255')
@@ -132,7 +139,7 @@ class Item extends Resource
 
             Fields\Text::make($field_key, function () use ($field) {
                 $text = '';
-                
+
                 foreach ($this->{$field} ?? [] as $item) {
                     $text .= '<b>'.$item['fields']['heading'].'</b><br><p>'.$item['fields']['text'].'</p><br>';
                 }

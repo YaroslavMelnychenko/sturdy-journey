@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
     public function getCategories(Request $request)
     {
-        $categories = Models\Category::orderBy('name', 'asc')->get();
+        $categories = Models\Category::orderBy('name', 'asc')->with('items')->get();
 
         return Response::send(
             CategoryResources\DefaultResource::collection($categories)

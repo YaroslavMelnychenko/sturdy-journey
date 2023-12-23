@@ -17,7 +17,7 @@ Route::prefix('/categories')->name('categories.')->controller('CategoryControlle
 
     Route::get('/', 'getCategories')->name('index');
 
-    Route::prefix('/{category}')->group(function () {
+    Route::prefix('/{category:slug}')->group(function () {
         Route::prefix('/items')->name('items.')->group(function () {
             Route::get('/', 'getCategoryItems')->name('index');
             Route::get('/all', 'getAllCategoryItems')->name('all');
@@ -28,7 +28,7 @@ Route::prefix('/categories')->name('categories.')->controller('CategoryControlle
 
 Route::prefix('/items')->name('items.')->controller('ItemController')->group(function () {
 
-    Route::prefix('/{item}')->group(function () {
+    Route::prefix('/{item:slug}')->group(function () {
         Route::get('/', 'getItem')->name('show');
     });
 

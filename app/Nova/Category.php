@@ -33,6 +33,13 @@ class Category extends Resource
                 ->rules('nullable', 'string', 'max:255')
                 ->sortable(),
 
+            Fields\Slug::make(__('Slug'), 'slug')
+                ->from('name')
+                ->rules('required', 'string', 'max:255', 'alpha_dash')
+                ->creationRules('unique:categories,slug')
+                ->updateRules('unique:categories,slug,{{resourceId}}')
+                ->sortable(),
+
             ...$this->getTimestampsFields($request),
 
             Fields\HasMany::make(__('Items'), 'items', Item::class),
