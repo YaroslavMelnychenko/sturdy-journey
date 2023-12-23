@@ -39,3 +39,9 @@ Route::prefix('/feedback')->name('feedback.')->controller('FeedbackController')-
     Route::post('/', 'createFeedback')->middleware('throttle:feedback')->name('create');
 
 });
+
+Route::prefix('/sitemap')->name('sitemap.')->controller('SitemapController')->group(function () {
+
+    Route::get('/', 'index')->name('index');
+
+});
