@@ -28,7 +28,7 @@ class SitemapController extends Controller
         foreach ($items as $item) {
             $sitemap[] = [
                 'type' => 'item',
-                'data' => new ItemResources\DefaultResource($item),
+                'data' => new ItemResources\BriefResource($item),
             ];
         }
 
