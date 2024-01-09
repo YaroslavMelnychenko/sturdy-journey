@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Str;
 
 use function Laravel\Prompts\search;
@@ -24,10 +25,17 @@ class CreateSlugsCommand extends Command implements PromptsForMissingInput
         try {
             $model = app("App\\Models\\$model");
 
-            $model::whereNull($column)->get()->each(function ($item) use ($column, $from) {
-                $item->$column = Str::slug($item->$from);
-                $item->save();
-            });
+            $items = $model::whereNull($column)->get();
+
+            foreach ($items as $item) {
+                try {
+                    $item->$column = Str::slug($item->$from);
+                    $item->save();
+                } catch (UniqueConstraintViolationException $e) {
+                    $item->$column = Str::slug($item->$from).'-'.$item->id;
+                    $item->save();
+                }
+            }
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }

@@ -11,7 +11,7 @@ class DetailedResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            ...$this->only('id', 'name', 'slug', 'rating', 'rating_url', 'link'),
+            ...$this->only('id', 'name', 'slug', 'rating_url', 'link'),
             'short_description' => $this->__('short_description'),
             'place' => $this->__('place'),
             'category' => new CategoryResource($this->whenLoaded('category')),
@@ -20,6 +20,7 @@ class DetailedResource extends JsonResource
             'seo' => $this->parsedSeo(),
             'icon_url' => $this->fullIconUrl(),
             'image_url' => $this->fullImageUrl(),
+            'rating' => round($this->rating, 2),
         ];
     }
 }
