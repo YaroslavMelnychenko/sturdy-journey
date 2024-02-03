@@ -48,7 +48,7 @@ class Item extends Resource
                     ->rules('required', 'string', 'max:255')
                     ->hideFromIndex(),
 
-                Fields\Text::make(__('Place uk'), 'place_uk')
+                Fields\Text::make(__('Place ua'), 'place_uk')
                     ->rules('required', 'string', 'max:255')
                     ->hideFromIndex(),
             ]),
@@ -76,7 +76,7 @@ class Item extends Resource
                     ->rules('required', 'string', 'max:5000')
                     ->hideFromIndex(),
 
-                Fields\Textarea::make(__('Short description uk'), 'short_description_uk')
+                Fields\Textarea::make(__('Short description ua'), 'short_description_uk')
                     ->rules('required', 'string', 'max:5000')
                     ->hideFromIndex(),
             ]),
@@ -91,19 +91,19 @@ class Item extends Resource
             new Panel(__('Description'), [
                 ...$this->makeRepeatableFields(__('Description'), 'description'),
                 ...$this->makeRepeatableFields(__('Description ru'), 'description_ru'),
-                ...$this->makeRepeatableFields(__('Description uk'), 'description_uk'),
+                ...$this->makeRepeatableFields(__('Description ua'), 'description_uk'),
             ]),
 
             new Panel(__('Features'), [
                 ...$this->makeRepeatableFields(__('Features'), 'features'),
                 ...$this->makeRepeatableFields(__('Features ru'), 'features_ru'),
-                ...$this->makeRepeatableFields(__('Features uk'), 'features_uk'),
+                ...$this->makeRepeatableFields(__('Features ua'), 'features_uk'),
             ]),
 
             new Panel(__('SEO'), [
                 ...$this->makeRepeatableFields(__('SEO'), 'seo'),
                 ...$this->makeRepeatableFields(__('SEO ru'), 'seo_ru'),
-                ...$this->makeRepeatableFields(__('SEO uk'), 'seo_uk'),
+                ...$this->makeRepeatableFields(__('SEO ua'), 'seo_uk'),
             ]),
 
             Fields\Image::make(__('Icon'), 'icon')

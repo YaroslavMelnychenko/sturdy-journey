@@ -29,7 +29,7 @@ class Category extends Resource
                 ->rules('nullable', 'string', 'max:255')
                 ->sortable(),
 
-            Fields\Text::make(__('Name uk'), 'name_uk')
+            Fields\Text::make(__('Name ua'), 'name_uk')
                 ->rules('nullable', 'string', 'max:255')
                 ->sortable(),
 
