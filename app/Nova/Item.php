@@ -115,14 +115,6 @@ class Item extends Resource
                 ->detailWidth(50)
                 ->deletable(false),
 
-            Fields\Image::make(__('Image'), 'image')
-                ->rules('image', 'max:'. 10 * 1024)
-                ->creationRules('required')
-                ->updateRules('nullable')
-                ->store(Storage\BaseStorage::folder('items/images'))
-                ->hideFromIndex()
-                ->deletable(false),
-
             ...$this->getTimestampsFields($request),
         ];
     }

@@ -58,8 +58,7 @@ class ItemFactory extends Factory
             'link' => $this->faker->url,
             'description' => $description,
             'features' => $features,
-            'icon' => 'items/icons/example.png',
-            'image' => 'items/images/example.jpg',
+            'icon' => 'items/icons/example.png'
         ];
     }
 }

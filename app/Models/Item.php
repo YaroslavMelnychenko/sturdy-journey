@@ -33,7 +33,6 @@ class Item extends Model
         'seo_ru',
         'seo_uk',
         'icon',
-        'image',
     ];
 
     protected $casts = [
@@ -101,15 +100,6 @@ class Item extends Model
         }
 
         return Storage::url($this->icon);
-    }
-
-    public function fullImageUrl(): ?string
-    {
-        if ($this->image === null) {
-            return null;
-        }
-
-        return Storage::url($this->image);
     }
 
     public function category()

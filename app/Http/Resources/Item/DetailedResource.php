@@ -19,7 +19,6 @@ class DetailedResource extends JsonResource
             'features' => $this->parsedFeatures(),
             'seo' => $this->parsedSeo(),
             'icon_url' => $this->fullIconUrl(),
-            'image_url' => $this->fullImageUrl(),
             'rating' => round($this->rating, 2),
         ];
     }
